@@ -8,7 +8,7 @@ To access your application:
 
 {{- if .Values.httpRoute.enabled }}
 {{- if .Values.httpRoute.hostnames }}
-  export APP_HOSTNAME={{ .Values.httpRoute.hostnames | first }}
+  export APP_HOSTNAME={{ index .Values.httpRoute.hostnames 0 }}
 {{- else }}
   export APP_HOSTNAME=$(kubectl get --namespace {{(first .Values.httpRoute.parentRefs).namespace | default .Release.Namespace }} gateway/{{ (first .Values.httpRoute.parentRefs).name }} -o jsonpath="{.spec.listeners[0].hostname}")
 {{- end }}

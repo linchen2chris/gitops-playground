@@ -4,7 +4,7 @@ description: A simple Helm chart example for GitOps playground
 
 type: application
 version: 0.1.0
-appVersion: "1.0.0"
+appVersion: "1.25.3"
 
 maintainers:
   - name: GitOps Playground

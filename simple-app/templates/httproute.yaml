@@ -22,14 +22,14 @@ spec:
   {{- end }}
   rules:
     {{- range .Values.httpRoute.rules }}
-    {{- with .matches }}
-    - matches:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .filters }}
+    - {{- with .matches }}
+      matches:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .filters }}
       filters:
-      {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
       backendRefs:
         - name: {{ $fullName }}
           port: {{ $svcPort }}
