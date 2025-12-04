@@ -1,0 +1,24 @@
+# Helm
+*.tgz
+charts/*/charts
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+/tmp/
+*.tmp
+
+# Kubernetes
+*.kubeconfig
+
+# Test outputs
+test-output/
