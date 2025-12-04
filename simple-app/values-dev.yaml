@@ -1,0 +1,44 @@
+# Development environment values
+# Override the default values for development environment
+
+replicaCount: 1
+
+image:
+  tag: "1.25.3"
+
+resources:
+  limits:
+    cpu: 50m
+    memory: 64Mi
+  requests:
+    cpu: 25m
+    memory: 32Mi
+
+podLabels:
+  app.kubernetes.io/component: web
+  environment: development
+
+env:
+  - name: ENVIRONMENT
+    value: "development"
+  - name: LOG_LEVEL
+    value: "debug"
+
+configMap:
+  enabled: true
+  data:
+    APP_NAME: "Simple App - Development"
+    APP_ENV: "dev"
+    DEBUG: "true"
+
+ingress:
+  enabled: false
+  className: "nginx"
+  hosts:
+    - host: simple-app-dev.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+autoscaling:
+  enabled: false

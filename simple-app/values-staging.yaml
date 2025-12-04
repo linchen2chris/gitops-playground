@@ -1,0 +1,44 @@
+# Staging environment values
+# Override the default values for staging environment
+
+replicaCount: 2
+
+image:
+  tag: "1.25.3"
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+podLabels:
+  app.kubernetes.io/component: web
+  environment: staging
+
+env:
+  - name: ENVIRONMENT
+    value: "staging"
+  - name: LOG_LEVEL
+    value: "info"
+
+configMap:
+  enabled: true
+  data:
+    APP_NAME: "Simple App - Staging"
+    APP_ENV: "staging"
+    DEBUG: "false"
+
+ingress:
+  enabled: false
+  className: "nginx"
+  hosts:
+    - host: simple-app-staging.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+autoscaling:
+  enabled: false

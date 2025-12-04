@@ -1,0 +1,74 @@
+# Production environment values
+# Override the default values for production environment
+
+replicaCount: 3
+
+image:
+  tag: "1.25.3"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+podLabels:
+  app.kubernetes.io/component: web
+  environment: production
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 101
+  fsGroup: 101
+  seccompProfile:
+    type: RuntimeDefault
+
+env:
+  - name: ENVIRONMENT
+    value: "production"
+  - name: LOG_LEVEL
+    value: "warn"
+
+configMap:
+  enabled: true
+  data:
+    APP_NAME: "Simple App - Production"
+    APP_ENV: "production"
+    DEBUG: "false"
+
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: simple-app.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: simple-app-tls
+      hosts:
+        - simple-app.example.com
+
+autoscaling:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - simple-app
+          topologyKey: kubernetes.io/hostname
