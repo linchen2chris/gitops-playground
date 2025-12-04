@@ -69,11 +69,11 @@ helm install simple-app ./simple-app -f my-custom-values.yaml
 |-----------|-------------|---------|
 | `replicaCount` | Number of replicas | `2` |
 | `image.repository` | Container image repository | `nginx` |
-| `image.tag` | Container image tag | `1.25.3` |
+| `image.tag` | Container image tag (empty uses appVersion) | `""` (uses `1.25.3` from appVersion) |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 | `service.type` | Kubernetes service type | `ClusterIP` |
 | `service.port` | Service port | `80` |
-| `service.targetPort` | Container port | `8080` |
+| `service.targetPort` | Container port | `80` |
 | `ingress.enabled` | Enable ingress | `false` |
 | `ingress.className` | Ingress class name | `nginx` |
 | `resources.limits.cpu` | CPU limit | `100m` |
